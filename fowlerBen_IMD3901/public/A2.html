@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Ben Fowler A2</title>
+      <script src="/js/aframe.min.js"></script>
+      <!-- loading in our js file with custom component -->
+      <script src="/js/aframe-environment-component.min.js"></script>
+      <script src="js/button-component.js"></script> 
+      <script src="https://unpkg.com/aframe-event-set-component@3.03/dist/aframe-event-set-component.min.js"></script>
+        <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
+        <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
+        <script src="https://unpkg.com/aframe-click-drag-component"></script>
+<body>
+  <script>
+    registerAframeClickDragComponent(window.AFRAME);
+  </script>
+    </head>
+    
+    <body>
+      <a-scene>
+          <a-assets timeout="10000">
+
+
+          <!-- https://www.free-stock-music.com/keys-of-moon-yugen.html -->
+          <audio id = 'droplet' src='droplet.mp3' preload='auto'></audio>
+          <audio id="yugen" src="/assets/yugen.mp3" preload="auto" crossorigin="anonymous"></audio>
+        </a-assets>
+
+        <a-entity camera wasd-controls look-controls position="0 1.6 0">
+          <a-entity cursor="rayOrigin:mouse;" raycaster="far:20; interval:200; objects:.interactive"></a-entity>
+          <a-entity light="type:spot; intensity:1.4; castShadow:true; shadowBias:-0.0005; angle:40; penumbra:0.3;" position="0.5 -0.5 0" rotation="0 0 0"></a-entity>
+        </a-entity>
+                
+        <a-entity sound="src:#yugen; autoplay: true"></a-entity>
+
+        <!-- custom component box-->
+        <a-entity box ="width: 1; height: 1; depth: 1; color: red "
+        position= "8 5 -1" shadow></a-entity>
+
+        <a-entity hand-controls="left" super-hands sphere-collider="objects: a-box"></a-entity>
+        <a-entity hand-controls="right" super-hands sphere-collider="objects: a-box"></a-entity>
+
+        <a-sphere click-drag="" position="1 2 -5" radius="1" color="red"></a-sphere>
+
+        <a-entity id="universal_button">
+          <!-- attaching our custom component to our button entity with a defined property -->
+          <a-entity class="button interactive" spinning-effect="duration:18000;" position="0 0.6 0" geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(255, 100, 100)" sound='src: url(droplet.mp3); on: click'
+                    animation__mouseenter="property:material.color; type:color; to:rgb(255, 0, 0); startEvents:mouseenter; dur:200"
+                    animation__mouseleave="property:material.color; type:color; to:rgb(255, 100, 100); startEvents:mouseleave; dur:200" shadow></a-entity>
+          <a-entity position="0 0.3 0" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;" material="color:rgb(255, 255, 255)" shadow></a-entity>
+
+          <a-entity class="button interactive" inst="duration:18000;" position="3 0.6 0" geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(255, 100, 100)"
+                    animation__mouseenter="property:material.color; type:color; to:rgb(0, 255, 0); startEvents:mouseenter; dur:200"
+                    animation__mouseleave="property:material.color; type:color; to:rgb(0, 100, 0); startEvents:mouseleave; dur:200" shadow></a-entity>
+        </a-entity>
+
+        <a-entity class="ground"  geometry="primitive:plane; width:15; height:14;" material="color:white;" position="0 0.01 0" rotation="-90 0 0" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity class="wall"    geometry="primitive:plane; width:15; height:15;" material="color:white;" position="8 6 0"  rotation="0 -90 0" shadow="cast:false; receive:true;"></a-entity>
+
+        
+        <a-entity environment="preset:japan"></a-entity>
+      </a-scene>
+    </body>
+</html>
